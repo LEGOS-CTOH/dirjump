@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
+GREP="/usr/bin/grep"
 dirjump_command="d"
 # If you use oh-my-zsh, this will override its 'd' function.
 # Change it if you like, maybe 'j' or 'jump' or something.
 
-history_size=10
+history_size=20
 # Recommendation:
 # in the range 5-20
 # not more than 50 (it is just not "recent" directories anymore)
@@ -36,20 +37,20 @@ function print_last_dir_pop_time()
 	then
 		if [ "$delta_hour" -eq 1 ]
 		then
-			echo "A path was last last popped out an hour ago."
+			echo "A path was last popped out an hour ago."
 		else
-			echo "A path was last last popped out $delta_hour hours ago."
+			echo "A path was last popped out $delta_hour hours ago."
 		fi
 	else
 		delta_minute=`echo "($curr_time-$time_del)/60" | bc`
 		if [ "$delta_minute" -eq 0 ]
 		then
-			echo "A path was last last popped out just now."
+			echo "A path was last popped out just now."
 		elif [ "$delta_minute" -eq 1 ]
 		then
-			echo "A path was last last popped out a minute ago."
+			echo "A path was last popped out a minute ago."
 		else
-			echo "A path was last last popped out $delta_minute minutes ago."
+			echo "A path was last popped out $delta_minute minutes ago."
 		fi
 	fi
 }
@@ -94,7 +95,7 @@ print_directory_history()
 # Source: https://stackoverflow.com/a/4749368/9157799
 path_already_listed()
 {
-	if grep -Fxq "$1" "$directory_list"
+	if $GREP -Fxq "$1" "$directory_list"
 	then
 		echo "exist"
 	else
@@ -138,7 +139,7 @@ dirjump()
 # Source: https://stackoverflow.com/a/5413132/9157799
 delete_a_dir_path()
 {
-	grep -Fxv "$1" "$directory_list" > ~/.dirjump.temp
+	$GREP -Fxv "$1" "$directory_list" > ~/.dirjump.temp
 	mv ~/.dirjump.temp "$directory_list"
 }
 
@@ -186,5 +187,6 @@ else
 		# https://askubuntu.com/a/97766/356625
 		[[ "${__dirjump_prev_wd:=$PWD}" != "$PWD" ]] && __propose_dir_path; __dirjump_prev_wd="$PWD"
 	}
-	PROMPT_COMMAND="$PROMPT_COMMAND;__dirjump_hook"
+	#PROMPT_COMMAND="$PROMPT_COMMAND;__dirjump_hook"
+	PROMPT_COMMAND="__dirjump_hook"
 fi
