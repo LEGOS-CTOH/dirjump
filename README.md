@@ -1,4 +1,8 @@
-Not maintained anymore. I use [zoxide](https://github.com/ajeetdsouza/zoxide) now.
+Original maintainer said:
+   Not maintained anymore. I use [zoxide](https://github.com/ajeetdsouza/zoxide) now.
+
+But I found it useful, as it just adds new functionnality to standard bash. And its quite simple...
+Tested on linux redhat 8 and ubuntu 22.04, and opensuse tumbleweed.
 
 # dirjump
 
